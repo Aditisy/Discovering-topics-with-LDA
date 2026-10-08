@@ -16,7 +16,29 @@ python lda_lab.py
 python -m unittest discover -s tests -v
 ```
 
-Open `outputs/report.html` in a browser to review topic-word probability charts and representative documents. The generated interpretation report explains the algorithm, results, assumptions, and limitations.
+## Topic Atlas website
+
+The complete responsive frontend replaces the simple results-page experience. To open it:
+
+```powershell
+python tools/build_website.py
+python -m http.server 8784 --bind 127.0.0.1 --directory dist
+```
+
+Open http://127.0.0.1:8784. The finished `dist` folder already contains the exported model, so serving it requires only Python; NumPy is required to train or rebuild its data.
+
+- **Topic overview:** interactive theme cards, real topic-word probabilities and representative documents.
+- **Document explorer:** searchable corpus, dominant-topic filters, original text, cleaned token counts and learned document-topic distributions.
+- **Analyze text:** approximate fold-in against the fixed learned topics, with known/unknown vocabulary shown explicitly. This does not retrain LDA.
+- **Methodology:** recorded training settings, probabilistic interpretation, limitations and all required output downloads.
+
+Analysis runs entirely in the browser. The model's vocabulary limits what it can interpret, and out-of-vocabulary words are excluded. The original `outputs/report.html` remains available as a simple generated results summary.
+
+After rerunning training, run `python tools/build_website.py` to refresh the website's data and downloads. Verify the frontend with `node tests/test_frontend.cjs`; the Python test suite also checks its exported distributions against the saved model.
+
+![Topic Atlas website](screenshots/topic-atlas-overview.png)
+
+The new frontend preserves the trained Gibbs-sampling model. Its optional text-analysis feature uses a fixed-topic approximation: initialize a uniform mixture, compute word responsibilities from theta times phi, add alpha to expected counts, normalize, and repeat up to 150 times or until the largest update is below 1e-8. It excludes unknown words and returns no mixture when none match. This is not retraining, exact Bayesian inference, or held-out evaluation.
 
 ## Dataset
 
@@ -55,7 +77,7 @@ Inspect the saved model with `numpy.load('outputs/lda_model.npz', allow_pickle=F
 
 ## Formatted lab report
 
-The formatted PDF is delivered separately and excluded from GitHub. It follows the supplied sample's section order, department header, blue headings, Times body text, page numbering and evaluation sheet. Student name and USN are blank for completion. Website screenshots are pending capture and will be added as image files, without uploading the PDF.
+The formatted PDF is delivered separately and excluded from GitHub. It follows the supplied sample's section order, department header, blue headings, Times body text, page numbering and evaluation sheet. Student name and USN are blank for completion. Website screenshots are available under `screenshots/`; the new Topic Atlas captures are prefixed `topic-atlas-`.
 
 To regenerate the PDF from the current output arrays, install `requirements-report.txt` and run `python tools/build_report.py` from the repository root.
 

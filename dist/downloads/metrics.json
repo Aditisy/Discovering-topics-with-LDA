@@ -1,0 +1,10 @@
+{
+  "documents": 32,
+  "vocabulary": 195,
+  "tokens": 420,
+  "topics": 4,
+  "iterations": 400,
+  "seed": 42,
+  "retained_samples": 20,
+  "training_reconstruction_perplexity": 42.089111207276986
+}
