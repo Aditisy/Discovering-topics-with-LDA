@@ -55,7 +55,7 @@ Inspect the saved model with `numpy.load('outputs/lda_model.npz', allow_pickle=F
 
 ## Formatted lab report
 
-`output/pdf/Exp04_Discovering_Topics_with_LDA.pdf` follows the supplied sample's section order, department header, blue headings, Times body text, page numbering and evaluation sheet. Student name and USN are blank for completion. The report contains vector model-result charts; a browser screenshot remains to be added if required by the final submission template.
+The formatted PDF is delivered separately and excluded from GitHub. It follows the supplied sample's section order, department header, blue headings, Times body text, page numbering and evaluation sheet. Student name and USN are blank for completion. Website screenshots are pending capture and will be added as image files, without uploading the PDF.
 
 To regenerate the PDF from the current output arrays, install `requirements-report.txt` and run `python tools/build_report.py` from the repository root.
 
